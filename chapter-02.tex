@@ -2,9 +2,10 @@
 
 \chapter{Related Work}
 
-In this chapter, we discuss the related work that we build upon or complement. In order to place this work in the proper context, we first describe the scope of this work, including our basic threat model and assumptions. Some of the related research has similar goals to this work, but differs in terms of the threat model or basic assumptions. Other works have a similar similar threat models and assumptions, but are solving different problems. This chapter should provide an overview of how our work fits into that ecosystem.
+In this chapter, we discuss the related work that we build upon or complement. In order to place this work in the proper context, we first describe the scope, threat model, and assumptions of this work in section \ref{sec:scope}. Some of the related research has similar goals to this work, but differs in terms of the threat model or basic assumptions. Other works have a similar similar threat models and assumptions, but are solving different problems. Next,  in section \ref{sec:related} we provides an overview of how our work fits into that ecosystem. In the remainder of the chapter, we then discuss the specific relationships between our work and the related work.
 
 \section{Scope of this Work}
+\label{sec:scope}
 
 This dissertation makes use of a variety of technologies and concepts. In short, we use paravirtualization and hardware-assisted virtualization of platforms virtual machines, along with network file servers and software virtual switches, to provide support for the principle of least privilege, access control, and isolation on end-user desktop systems using open source technologies.
 
@@ -34,13 +35,8 @@ We assume that the virtual machine monitor (hypervisor) is part of the trusted c
 
 We make a conscious choice to support both Windows and Linux guest operating systems, but also do not make design decisions that would limit the possibility of supporting other guest operating systems.  We also choose to focus our support and testing on open source hypervisor solutions, but this is not a fundamental requirement. Finally, we also choose to support desktop systems as a priority, but consider application of our system to mobile devices (such as smart phones and tablets), server-class systems (including public, private, and hybrid cloud environments), web-based environments, and thin client setups to be important and natural extensions of this work.
 
-
-%****possible addition that could be helpful***
-%<summary table for threat models and/or basic assumptions as compared to this work>
-%***
-
-
 \section{Overview of Related Work}
+\label{sec:related}
 
 We build upon and complement a rich array of related work. First, we consider the long history of virtualization, both on server-class systems, such as the IBM mainframe, and on commodity desktop systems. Lessons learned and concepts applied over the years have provided a great foundation on which this work lies. Next, we consider the long history of the field of computer security, primarily from a network and information security standpoint, and further limiting our scope to focus primarily on the factors that have a direct impact on commodity desktop computing. Then, we describe the broad spectrum of work that has combined virtualization and security techniques to address various security issues.
 
@@ -52,6 +48,7 @@ The related work and concepts with respect to malware classification will be cov
 \section{Virtualization}
 
 \subsection{History and Evolution}
+\label{sec:related-history-evolution}
 
 Virtual machine technology, including the virtual machine monitor (VMM) or hypervisor was pioneered by IBM in the 1960s~\cite{creasy_1981}. The original IBM VMM was designed for IBM System/370 machines and has co-evolved over the years with the IBM hardware that it runs on.  The current iteration of the IBM VMM is now known as the z/VM hypervisor and runs on IBM System z (zSeries) server hardware. Other VMM software and hardware co-evolutions include IBM's pSeries hypervisors for pSeries hardware~\cite{armstrong_power5_2005,blank_p5_2005} and Sun Microsystems Logical Domains (now Oracle VM for SPARC) for SPARC hardware~\cite{sparc_architecture_2005,sparc_vm_2006}. While, yet other hardware, such as the Alpha processor, was specifically designed to support virtualization \cite{karger_2007}. 
 
@@ -189,7 +186,7 @@ On the other hand, a traditional firewall might not be as necessary to integrate
 
 Another advantage of our flexible architecture is that enforcement elements, such as our NET-VM and other more traditional network enforcement (for example intrusion detection systems and firewalls) can be place either inside of our infrastructure or could be placed outside of our infrastructure in a separate server or the enforcement element service could be provided by a physical network appliance. The design details that allow for this type of flexibility will be discussed in more detail in the next chapter.
 
-\section{Anti-Virus Software and Host-based Intrusion Detection Systems}
+\section{Anti-virus Software and Host-based Intrusion Detection Systems}
 
 Anti-Malware software, which is referred to more commonly as anti-virus software, and Host-based Intrusion Detection Systems (HIDSes) can be used to complement the system as a whole. As we will describe in the Malware Classification section of Chapter 5 on evaluation, our system is able to defend quite well against a variety of attacks. However, there are still cases where a malware package and an HIDS could play a significant role. The advantage of virtualization is that malware software and an HIDS could be run outside of the individual virtual machines, so that malware would not be able to disable them even if it was able to obtain administrative privileges on the virtual appliance. Further, running anti-virus software or an HIDS on each virtual appliance would be a waste of resources. The defense in depth argument could be used, but since file systems can be mounted privately over the virtual network and the memory can be scanned from the hypervisor with VM introspection techniques, it is probably a simpler and more reasonable approach to simple rely on a single entity to run the anti-virus software and perhaps the same or another entity to run the HIDS.
 
@@ -202,5 +199,6 @@ The combination of signature-based and behavior-based malware could be helpful i
 Finally, an HIDS, such as tripwire\cite{kim_1994}, is used as a way to keep track of all changes to files on the system. An HIDS will scan the entire system and generate some sort of hash or checksum for all the files and then compare those hashes or checksums to the files over time to watch for changes. If important system files changed unexpectedly, that could be a sign that malware has compromised the system. Virtualization support for a HIDS is very common in research. One very good example is a system called livewire\cite{VMI_IDS_2003} that uses virtual machine introspection techniques~\cite{xenaccess_07,vmsafe_news_2008} (or inspecting the internals of the VM from outside of it) to provide a sophisticated HIDS for a virtualization environment. Integrated a HIDS and/or using virtual machine introspection techniques would be an interesting area of future work.
 
 Now that we have placed this work into its proper context and described the related work, we will describe the design of our system in the next chapter.
+
 
 

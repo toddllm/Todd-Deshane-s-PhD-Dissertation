@@ -31,7 +31,7 @@ Xen and KVM take different approaches to the implementating a hypervisor. Xen us
 \begin{centering}
 \rotcaption{Our Achitecture on a Integrated Hypervisor}
 \label{fig:IntegratedHypervisor}
-\includegraphics[scale=1.0,angle=90]{figs/IntegratedHypervisorArchitecture}
+\includegraphics[scale=0.7,angle=90]{figs/IntegratedHypervisorArchitecture}
 \end{centering}
 \end{figure}
 
@@ -41,7 +41,7 @@ Figure \ref{fig:StandAloneHypervisor} depicts our architecture integrated with t
 \begin{centering}
 \rotcaption{Our Achitecture on a Stand-alone Hypervisor}
 \label{fig:StandAloneHypervisor}
-\includegraphics[scale=1.0,angle=90]{figs/StandAloneHypervisorArchitecture}
+\includegraphics[scale=0.7,angle=90]{figs/StandAloneHypervisorArchitecture}
 \end{centering}
 \end{figure}
 
@@ -51,6 +51,7 @@ From a practical standpoint, the integrated hypervisor approach allows for insta
 
 \subsection{VMM Interface}
 \label{sec:vmm-implementation}
+
 
 In chapter 3, we described our design of OSCKAR and its inclusion of a VMM interface. The VMM interface that we integrated into our Rapid Recovery Desktop implementation provides a high level interface to manage virtual machines. With our VMM interface, virtual appliances, which are just special virtual machines, can use libvirt or directly use the underlying virtualization technologies, such as Xen or KVM. In this way, our VMM interface allows for both the generic use of libvirt-based VMs (a generic vmm ruleset type) and also for the specific use of features provided by the various virtualization systems (specific vmm ruleset types). This allows users who is familar with libvirt-based VMs to use them and also for users that are familar with a particular system to use it. This type of support is also important since libvirt may implement a specific feature in a way that is convenient for the user or libvirt may not have yet implemented a specific feature that exists in a specific system. Our VMM interface lets users be able to use either a libvirt backend, the default, or choose a specific backend, such as Xen or KVM, as needed. 
 
@@ -65,6 +66,7 @@ We described in Chapter 3 the concept of interfaces registering for events and t
 \begin{figure}[tbp]
 \caption{VMM rule set that uses the generic vmm backend chosen by the VMM interface}
 \label{lst:generic-vmm}
+
 \begin{lstlisting}
  <ruleset type="vmm">
     <name>browser</name>
@@ -95,6 +97,7 @@ We described in Chapter 3 the concept of interfaces registering for events and t
 \begin{figure}[tbp]
 \caption{VMM rule set that uses the specific qemu-spice backend}
 \label{lst:specific-vmm}
+
 \begin{lstlisting}
 <ruleset type="qemu-spice">
     <name>browser</name>
@@ -136,6 +139,7 @@ As a future extension to our builder interface, we could automate the process of
 \begin{figure}[tbp]
 \caption{Builder rule set}
 \label{lst:builder-ruleset}
+
 \begin{lstlisting}
  <ruleset type="builder">
     <os type="linux" flavor="ubuntu" version="9.10" />
@@ -179,6 +183,7 @@ Figure \ref{lst:PolicyManager_global} shows an example global Policy Manager con
 \begin{figure}[tbp]
 \caption{A Sample Policy Manager Global Contract. Note that the \$ARG is simply the argument to the event. \$ARG is replaced with the argument passed during the event at runtime}
 \label{lst:PolicyManager_global}
+
 \begin{lstlisting}
 <contract type="global_PolicyManager_policy">
   <ruleset type="response">
@@ -209,7 +214,7 @@ A high-level diagram of this process is depicted in Figure \ref{fig:StartVM}. In
 
 As was described in Chapter 2 on related work, there is a fair amount of work in the virtual machine contract (VMC) space and we have been involved with much of it. VMCs are not yet significantly mature, however. Many of the important concepts have been presented \cite{virtual_machine_contract_ICAC09} and OVF is starting to be used in practice among the key virtualization players. While OVF is a step in the right direction, it still lacks many proposed features that allow us to use it directly for the Rapid Recovery Desktop system. OVF still has a long ways to go to progress from the high level theory of interchangeable VMs ~\cite{dmtf_newsletter, vmware_ovf_website, citrix_ovf_article, rhev_announce_2010} to putting that theory into practice in real world scenarios \cite {ovf_vmware_to_kvm_2010,fedora_virtAppliances, kensho_ovf_vmware_article}. 
 
-One of the main purposes of the virtual machine contract system found in this dissertation is to bridge the gap between what is commonly deployed today and what is possible to be deploy today. Since standards and software release schedules tend to move slowly, it is helpful to have a flexible contract system, like the one proposed in this dissertation, to prototype and test new features. Our design does not prevent the conversion to or use of technologies like OVF, but instead, provides a way to test useful functionality so that it might one day be included in the OVF standard. So, until there is a standard that everyone can enjoy, we provide an implementation that can be used today. 
+One of the main purposes of the virtual machine contract system found in this dissertation is to bridge the gap between what is commonly deployed today and what is possible to be deployed today. Since standards and software release schedules tend to move slowly, it is helpful to have a flexible contract system, like the one proposed in this dissertation, to prototype and test new features. Our design does not prevent the conversion to or use of technologies like OVF, but instead, provides a way to test useful functionality so that it might one day be included in the OVF standard. So, until there is a standard that everyone can enjoy, we provide an implementation that can be used today. 
 
 Figure \ref{lst:vmc_general} shows an example of the general syntax available with our contract system. We currently support two types of contracts, namely the virtual machine contract (VMC) and the Policy Manager Global contract. VMCs are for specifying the resources and constraints to place on a virtual appliance. Policy Manager Global contracts express a much different operational logic and policy than VMCs and are intended for use with the Policy Manager component of OSCKAR. 
 
@@ -220,6 +225,7 @@ The general format of the contract is a set of rule sets. There are any number o
 \begin{figure}[tbp]
 \caption{General Virtual Machine Contract (VMC) Format}
 \label{lst:vmc_general}
+
 \begin{lstlisting}
 <contract type="vmc" id="browser-appliance">
  <ruleset type="vmm">
@@ -271,7 +277,7 @@ The general format of the contract is a set of rule sets. There are any number o
 \end{lstlisting}
 \end{figure}
 
-As described in the VMM interface implementation (section \ref{sec:vmm-interface-implementation}), we convert the contracts from our high level interfaces to the actual backend systems. So, our contract system builds upon the functionality of various virtualization systems, as well as any of the backend technologies used for the enforcement elements. For example, the native configuration files supported by technologies like libvirt are able to specify the hardware resource requirements, but do not necessarily support more advanced access control rules. Our contract system is used to handle these more advanced contracts to support the richer access control rules that we gain by using Samba mounts for our FS-VM and Open vSwitch access control rules for our NET-VM. Support for these types of options could be integrated into the backend technologies like libvirt, OVF, etc., but again this is an example of how our system can bridge that gap as needed. New technologies will always come along and interface designers may want to make use of them in ways that are not explicitly supported by the underlying technologies, but that shouldn't stop them from using the new technologies.
+As described in the VMM interface implementation (section \ref{sec:vmm-implementation}), we convert the contracts from our high level interfaces to the actual backend systems. So, our contract system builds upon the functionality of various virtualization systems, as well as any of the backend technologies used for the enforcement elements. For example, the native configuration files supported by technologies like libvirt are able to specify the hardware resource requirements, but do not necessarily support more advanced access control rules. Our contract system is used to handle these more advanced contracts to support the richer access control rules that we gain by using Samba mounts for our FS-VM and Open vSwitch access control rules for our NET-VM. Support for these types of options could be integrated into the backend technologies like libvirt, OVF, etc., but again this is an example of how our system can bridge that gap as needed. New technologies will always come along and interface designers may want to make use of them in ways that are not explicitly supported by the underlying technologies, but that shouldn't stop them from using the new technologies.
 
 As described in Chapter 2 on related work, adding mandatory access control (MAC) to the virtualization layer, in the form of XSM\cite{xsm_xen_summit_3rd} or sVirt\cite{sVirt_website}, is complementary to our contract system. In order to support MAC policies like these, support would need to be integrated into the VMM interface and other enforcement elements. Implementing MAC rules as a new VMC rule set type and creating the proper enforcement elements could be a good area of future implementation work.
 
@@ -287,6 +293,7 @@ An example file system rule set that allows mounting, read/write access, and rat
 \begin{figure}[tbp]
 \caption{FS-VM example rule set}
 \label{lst:fs_vm}
+
 \begin{lstlisting}
 <ruleset type='FS-VM>
 
@@ -322,8 +329,6 @@ An example file system rule set that allows mounting, read/write access, and rat
 
 In Figure \ref{lst:fs_vm}, the FS-VM rule set defines mount points, with access permissions and rate limiting options and violations, with events to raise when a violation is noticed. Note that \$ARG corresponds to the VM that the violation refers to, which is replaced on the fly by OSCKAR. For this example, we consider a browser appliance, that has write access to the downloads mount point and read access to the photos mount point (to upload to a photo site). We assume that the user is only allowed to upload a certain number of photos per minute to the server, so we impose a read limit on the number of photos that can be read. When the FS-VM detects a violation, it will send a "PolicyManager.read-rate-violation" event. The corresponding PolicyManger ruleset block tells PolicyManager the set of responses that it should take. In this example, PolicyManger will log the violation, notify our Rapid Recovery Desktop control element and then refresh the state of the VM, by restoring it to the last know good state. We will evaluate the recovery process in more detail in the evaluation section.
 
-We discuss more of the possibilities for a more sophisticated FS-VM in future work, but point out here that more advanced network attached storage (NAS) appliances already exist and could be used in conjunction with our current implementation. Among exiting open source NAS solutions are OpenFiler\cite{openfiler_website}, FreeNAS\cite{freenas_website}, and a not yet released project called OpenMediaVault\cite{openmediavault_website}.
-
 \section{NET-VM}
 \label{sec:net-vm-implementation}
 
@@ -336,6 +341,7 @@ The access control rules that we can apply to the virtual switches allow us to a
 \begin{figure}[tbp]
 \caption{NET-VM example rule set}
 \label{lst:net_vm}
+
 \begin{lstlisting}
 <ruleset type="NET-VM">
 
@@ -354,6 +360,7 @@ If desired, we could also apply network rate limiting for virtual appliances usi
 \begin{figure}[tbp]
 \caption{Rate-limiting NET-VM example rule set}
 \label{lst:net_vm-rate}
+
 \begin{lstlisting}
 <ruleset type="NET-VM">
 <flows>
@@ -414,7 +421,7 @@ The NET-VM rule sets in Figure \ref{lst:net_vm-rate} add rate-limiting rules and
 
 Another set of violations that we can handle are invalid outgoing port requests. When a VM attempts to create a flow that is not in its allowed list, it is disallowed automatically by Open vSwitch, since an explicit allow rule is not in place. This type of situation might signal a problem with the VM. So one possible response could be to restore the VM to a known good state.
 
-More granularity of control is also possible for any of the enforcement elements. The enforcement element designer needs only to add the functionality and make it known. For the NET-VM, some possible enhancement could include allowing for some number of invalid port requests before restoring the VM, only restoring the VM some maximum number of times before simply shutting it down and alerting an administrator, or logging invalid incoming port requests for security research purposes. These options are currently not available in our NET-VM implementation, but could be added as future implementation work.
+Finer granularity of control is also possible for any of the enforcement elements. The enforcement element designer needs only to add the functionality and make it known. For the NET-VM, some possible enhancement could include allowing for some number of invalid port requests before restoring the VM, only restoring the VM some maximum number of times before simply shutting it down and alerting an administrator, or logging invalid incoming port requests for security research purposes. These options are currently not available in our NET-VM implementation, but could be added as future implementation work.
 
 \section{Example Virtual Appliances}
 \label{sec:example-appliances-implementation}
@@ -428,6 +435,7 @@ A VMC for our example browser virtual appliance is shown in Figures \ref{lst:bro
 \begin{figure}[tbp]
 \caption{Browser Appliance Virtual Machine Contract (VMC) (1 of 3)}
 \label{lst:browser-appliance}
+
 \begin{lstlisting}
 <contract type="vmc" id="browser-appliance">
  <ruleset type="vmm">
@@ -455,9 +463,11 @@ A VMC for our example browser virtual appliance is shown in Figures \ref{lst:bro
   </ruleset>
  <ruleset type="builder">
    <os type="linux" flavor="ubuntu" version="9.10" />
-   <disk type="disk" size="10240" sparse="true" format="qcow2">browser.qcow2</disk>
+   <disk type="disk" size="10240" sparse="true" format="qcow2">browser.qcow2
+   </disk>
    <partitions>
-     <partition filesystem="ext3" mountpoint="/" size="10G" bootable="true">1</partition>
+     <partition filesystem="ext3" mountpoint="/" size="10G" bootable="true">1
+     </partition>
    </partitions>
    <users>
      <user logindisabled="true">root</user>
@@ -475,6 +485,7 @@ A VMC for our example browser virtual appliance is shown in Figures \ref{lst:bro
 \begin{figure}[tbp]
 \caption{Browser Appliance Virtual Machine Contract (VMC) Continued (2 of 3)}
 \label{lst:browser-appliance-cont}
+
 \begin{lstlisting}
 <ruleset type='FS-VM>
   <mounts>
@@ -514,6 +525,7 @@ A VMC for our example browser virtual appliance is shown in Figures \ref{lst:bro
 \begin{figure}[tbp]
 \caption{Browser Appliance Virtual Machine Contract (VMC) Continued (3 of 3)}
 \label{lst:browser-appliance-cont2}
+
 \begin{lstlisting}
 <ruleset type='PolicyManager'>
 <responses event="PolicyManager.read-rate-violation">
