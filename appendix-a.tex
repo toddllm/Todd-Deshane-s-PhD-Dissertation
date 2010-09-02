@@ -1,0 +1,31 @@
+
+
+\chapter{Performance Results}
+
+\section{Details of Performance Results for this Dissertation}
+
+During our performance evaluation, we ran various benchmarks on a variety of hardware and software. We are collecting all of the raw performance results at the following github website: \url{http://github.com/deshantm/Rapid-Recovery-Desktop-Testing}
+
+At the time of this writing, the results on our collection site are broken down into IOzone and NetPIPE results. For each run, we take 3 trials and keep a time log using the Unix time command. The file names indicate both the base and guest operating systems. As we take more measurements on various hardware and software platforms, we will create directories or name files to indicate the details of the test.
+
+The scripts that we used to run the tests can also be found at on our collection site. There are scripts to setup IOzone, NetPIPE, and Open vSwitch. There are also scripts that will run the tests. These scripts include configurable parameters, such as the number of runs, the output directory, and other configuration options. 
+
+IOzone comes with scripts to generate graphs, which can be found in a source code download of IOZone. The NetPIPE output file can be used directly with Gnuplot. Within our repository, we also maintain wrapper scripts that we use to for creating graphs from our data.
+
+\section{Other Related Performance Evaluation}
+
+At Clarkson, we have performed a number of virtualization performance-related studies. The first of which was done in 2004, shortly after the Xen team released the first version of Xen at the Symposium on Operating System Principles (SOSP) 2003. We repeated their performance tests and showed that Xen could also perform well on an IBM zServer and an older commodity PC. We published the paper ``Xen and the Art of Repeated Research''\cite{clark_2004}.
+
+In our next study, which was done in 2005, we tested the performance of a very early prototype  
+ of our Rapid Recovery Desktop system. This paper showed that reasonable performance could be obtained with our system, especially consider the security benefits. We published the paper
+``Data Protection and Rapid Recovery From Attack With A Virtual Private File Server and Virtual Machine Appliances''\cite{rapid_recovery_paper_05}.
+
+In 2007, we completed a study that compared the performance isolation properties of various virtualization systems. The goal of this study was to measure how well a virtualization system can isolate (in terms of performance) guest systems from each other. So, for example, we ran a stress test in one of the virtual machines and determined if stress in that machine has an performance impact on the other virtual machines running on the system. This study highlighted the differences between full virtualization, paravirtualization, and operating system level (or container-based) virtualization. Our results showed that full virtualization provides complete isolation among guest. We noticed that paravirtualization also does quite well, with some small, but repeatable degradation in some of the tests. Finally, operating system virtualization could provide isolation as well, but required resource controls to be implemented and properly configured. We published the paper ``Quantifying the performance isolation properties of virtualization systems''\cite{isolation_paper_2007}.
+
+We performed a study as part of a larger effort in 2008 to measure network latency for Xen in various networking configurations. In particular, we looked at Xen configured with loopback networking, bridged networking, and routed networking. In this study we measured ping times for the various networking scenarios between guests, the host system, and other physical systems. The results showed that there was some latency introduced by the Xen networking stack and that bridging mode and routing mode performed better or worse in various cases. This study was published as an appendix to our book ``Running Xen: A Hands-on Guide to the Art of Virtualization''\cite{runningxen_book}.
+
+Another study that we performed compared the various virtualization options on the Solaris operating system. We compared a full virtualization option, VirtualBox, a paravirtualization option, xVM (based on Xen), and a operating system level virtualization option, Solaris Zones. We compared the performance, subjective usabilty, and configuration options of each. We found that each option has its strengths and weaknesses, but that performance the overall performance is best with Zones, followed by xVM, then VirtualBox. We found that, in our opinion, the usability of VirtualBox and Zones was better than xVM. We also found that the use cases and features for each vary significantly, so the desired guest type(s) and other requirements should be taken into consideration when choosing a virtualization option on Solaris. We published an article in the USENIX ;login: magazine titled ``Solaris Virtualization Options''\cite{solaris_virt_options_2008}.
+
+Finally, in 2008, we did a performance comparison of Xen vs. KVM. We compared these two open source virtualization options in terms of disk, network, and CPU performance, scalability, and performance isolation. We found very mixed results. Xen showed much better scalability, while KVM showed better isolation (this again highlighted the difference between full virtualization and paravirtualization). The overall performance results in terms of disk, networking, and CPU were also mixed. This study was done on a relatively early version of KVM. We presented our findings at Xen Summit in an extended abstract and presentation, both titled ``Quantitative Comparison of Xen and KVM''\cite{kvm_vs_xen_at_xen_summit_2008}.
+
+

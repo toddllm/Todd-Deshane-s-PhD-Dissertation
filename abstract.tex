@@ -1,9 +1,25 @@
 %  abstract.tex
 
+
+  \begin{center}
+    \vspace*{10mm}
+    CLARKSON UNIVERSITY\\
+    \vspace{1mm}
+    \normalsize{An Attack-Resistant and Rapid Recovery Desktop System}\\
+    \vspace{1mm}
+    \normalsize{By: Todd Deshane}\\
+    \vspace{1mm}
+    \normalsize{Advisor: Jeanna Matthews}\\
+  \end{center}
+
+
+
 \section*{Abstract}
 
-General purpose computing devices, such as personal computers (PCs), and the operating systems that run on them provide more functionality and capabilities then most users will ever want or need. Too much of the burden of keeping these computer system secure is placed on the end users. Users are often required to keep the operating system, applications, security software, and anti-virus definitions up-to-date. Even with all the latest security updates, users are still susceptible to the latest exploits. The process of restoring a compromised system to a usable state can frequently result in the loss of any personal data stored on the system. Personal data can only be recovered through repeated effort and in some cases can never be recovered. Malware is not the only source of problems on a computer system. Software bugs and conflicting software packages are also sources of problems for users. Software bugs can cause system instability as well as data corruption. 
 
-In this dissertation, we present the design and implementation of a Rapid Recovery Desktop system that provides resistance against attack and rapid recovery from broken system state or malware infestation. For this system, we created a file server virtual machine (FS-VM), a network virtual machine (NET-VM), a virtual machine contract system, and a virtualization security framework (OSCKAR). We showed that our system has an acceptable performance overhead, especially considering the security and recovery benefits gained.
+
+General-purpose computing devices, such as personal computers (PCs), and the operating systems that run on them provide more functionality and capabilities than most users will ever want or need. Too much of the burden of keeping these computer systems secure is placed on the end users. Users are often required to keep the operating system, applications, security software, and anti-virus definitions up-to-date. Even with the latest security updates, users are still susceptible to the newest exploits. When a system does become compromised, the process of then restoring it to a usable state can frequently result in the loss of personal data stored on the system. Personal data can often only be recovered through repeated effort and in some cases can never be recovered. Malicious software (malware) is not the only source of problems on a computer system. Software bugs and conflicting software packages can also cause system instability as well as data corruption.
+
+In this dissertation, we present a unique desktop system architecture solution to the pervasive problem of recovering from malware attacks. We demonstrate our architecture with an open source implementation of our Rapid Recovery Desktop system that provides resistance against attack and rapid recovery from broken system state and malware infestation. Our system combines a file server virtual machine (FS-VM), a network virtual machine (NET-VM), a virtual machine contract system, and a virtualization security framework (OSCKAR) to isolate, provide access control, and limit the privileges of applications. We measured the system's performance overhead and evaluated the security and recovery benefits.
 
 

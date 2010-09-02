@@ -123,7 +123,7 @@
 
   The undersigned have examined the dissertation entitled
   \textbf{\@title} presented by \@author{}, a candidate for the degree
-  of Doctor of Philosphy, \@major{} and hereby certify that it is
+  of Doctor of Philosophy, \@major{} and hereby certify that it is
   worthy of acceptance.\\
   \vspace{25mm}
 
@@ -169,3 +169,4 @@
   \doublespace
 
 }
+
